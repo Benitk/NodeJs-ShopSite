@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
 
+
+// using flash to notify user if input isnt valid
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
   if (message.length > 0) {
@@ -16,6 +18,7 @@ exports.getLogin = (req, res, next) => {
   });
 };
 
+// using flash to notify user if input isnt valid
 exports.getSignup = (req, res, next) => {
   let message = req.flash('error');
   if (message.length > 0) {
@@ -30,6 +33,10 @@ exports.getSignup = (req, res, next) => {
   });
 };
 
+// check if user email is already exist in db, 
+// decrypt password, and check if they match
+// if there isnt any error then log in user
+// else redriect to login page and notify errors
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -61,6 +68,9 @@ exports.postLogin = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
+
+// check if input email is not already exist in db, 
+// encrypt password, creating new user in db
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
